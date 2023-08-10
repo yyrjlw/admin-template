@@ -4,7 +4,7 @@ import { join } from 'path';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import routes from './routes';
-const { REACT_APP_ENV = 'dev' } = process.env;
+const { REACT_APP_ENV = 'dev', MOCK_SERVER } = process.env;
 export default defineConfig({
   /**
    * @name 开启 hash 模式
@@ -116,10 +116,16 @@ export default defineConfig({
       async: true,
     },
   ],
+  mock: false, //关闭umijs自带mock，使用Mock Service Worker
   //================ pro 插件配置 =================
   presets: ['umi-presets-pro'],
   mfsu: {
     strategy: 'normal',
   },
   requestRecord: {},
+  //向浏览器环境导出环境变量为全局变量
+  define: {
+    MOCK_SERVER,
+    SUCCESS_CODE: 200,
+  },
 });

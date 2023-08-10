@@ -90,3 +90,10 @@ if (pwa) {
   });
   clearCache();
 }
+
+if (MOCK_SERVER) {
+  const { worker } = require('../mocks/browser');
+  worker.start({
+    onUnhandledRequest: 'bypass',
+  });
+}
