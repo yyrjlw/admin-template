@@ -51,18 +51,6 @@ export async function getInitialState(): Promise<{
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
   return {
-    menu: {
-      request() {
-        return new Promise((res) => {
-          res([
-            {
-              name: '异步菜单',
-              path: '/test',
-            },
-          ] as Route[]);
-        });
-      },
-    },
     actionsRender: () => [<Question key="doc" />],
     avatarProps: {
       src: initialState?.currentUser?.avatar,
@@ -135,3 +123,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
  * @doc https://umijs.org/docs/max/request#配置
  */
 export const request = servicesConfig;
+
+export function patchClientRoutes({ routes }: { routes: Route }) {
+  routes.unshift({
+    path: '/test',
+    element: React.lazy(() => import('@/pages/Test')),
+  });
+}
